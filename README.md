@@ -5,4 +5,4 @@ rabbitmq-client
 
 MessageProducer实现了简单的池连接，复用连接对象（在并发压力不大的情况下建议共享连接对象，不同的队列可以通过不同的channel进行消息的发送），但没有提供channel部分的管理，这部分交由spring封装的部分去实现（一般在并发不高的情况下channel的共享，channel的建立需要通过两次tcp请求，也是比较耗时的部分）
 
-如果基于原生的api进行封装时，可以对connectionFactory使用连接池，在每个Connection中对channel使用连接池
+如果基于原生的api进行封装时，可以对connection使用连接池，在每个Connection中对channel使用连接池
