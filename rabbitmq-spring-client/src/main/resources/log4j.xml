@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="RMQ-CLIENT-DEBUG" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="Append" value="true" />
+        <param name="File" value="/var/logs/rabbitmq-client/rabbitmq-client_debug.log" />
+        <param name="DatePattern" value="'.'yyyy-MM-dd" />
+        <param name="encoding" value="UTF-8" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%t][%c] %p - %m%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="DEBUG" />
+            <param name="LevelMax" value="ERROR" />
+        </filter>
+    </appender>
+
+    <logger name="com.lxc.rbmq.client" additivity="true">
+        <level value="DEBUG" />
+        <appender-ref ref="RMQ-CLIENT-DEBUG" />
+    </logger>
+
+</log4j:configuration>
