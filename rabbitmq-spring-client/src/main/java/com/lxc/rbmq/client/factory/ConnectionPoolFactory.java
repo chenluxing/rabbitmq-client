@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -62,8 +63,21 @@ public class ConnectionPoolFactory {
     public static void sendMessage(String key, byte[] msg) {
         Assert.notNull(key, "mq配置Key不允许为空");
         Assert.notNull(msg, "消息体不允许为空");
-        Message message = new Message(msg, null);
+        Message message = new Message(msg, new MessageProperties());
         getTemplate(key).send(message);
+    }
+
+    /**
+     * 发送消息
+     *
+     * @param key
+     * @param msg
+     */
+    public static void sendTopicMessage(String key, byte[] msg) {
+        Assert.notNull(key, "mq配置Key不允许为空");
+        Assert.notNull(msg, "消息体不允许为空");
+        Message message = new Message(msg, new MessageProperties());
+        getTemplate(key).convertAndSend(message);
     }
 
     /**

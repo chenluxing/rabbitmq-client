@@ -26,17 +26,20 @@ public class ConnectionConfiguration {
             exchange = new FanoutExchange(properties.getExchange());
             admin.declareExchange(exchange);
             template = admin.getRabbitTemplate();
+            template.setExchange(properties.getExchange());
         } else if (ExchangeType.TOPIC.getValue().equals(properties.getType())) {
             // 主题分发：路由表达式匹配
             exchange = new TopicExchange(properties.getExchange());
             admin.declareExchange(exchange);
             template = admin.getRabbitTemplate();
+            template.setExchange(properties.getExchange());
             template.setRoutingKey(properties.getRoutingkey());
         } else if (ExchangeType.DIRECT.getValue().equals(properties.getType())){
             // 定向分发：路由完全匹配
             exchange = new DirectExchange(properties.getExchange());
             admin.declareExchange(exchange);
             template = admin.getRabbitTemplate();
+            template.setExchange(properties.getExchange());
             template.setRoutingKey(properties.getRoutingkey());
         } else {
             Queue queue = new Queue(properties.getQueue());
